@@ -18,6 +18,7 @@ sfe_ism_data_t gyroData;
 
 // SD Card File
 File dataFile;
+String data;
 
 // Sea level pressure in hPa
 #define SEA_LEVEL_PRESSURE 1013.25
@@ -86,7 +87,6 @@ void loop() {
     altitude = bmp.readAltitude(SEA_LEVEL_PRESSURE); // Calculate altitude
   } else {
     Serial.println("Failed to read BMP388!");
-    return;
   }
 
   // Read ISM330DHCX data
@@ -109,9 +109,11 @@ void loop() {
   
 
   // Write data to SD card
-  #define dataFile = Serial //SD.open("data.csv", FILE_WRITE);
+  SD.open("data.csv", FILE_WRITE);
   if (true) {
-    dataFile.print(millis());
+    data = "";
+    data += millis();
+    dataFile.print(data);
     dataFile.print(",");
     dataFile.print(pressure, 2);
     dataFile.print(",");
