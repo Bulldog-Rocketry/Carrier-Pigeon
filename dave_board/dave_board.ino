@@ -43,7 +43,7 @@ void setup(void) {
     Serial.print("SD card sucess");
   }                                      //CS Pin
   myFile = SD.open("/Launch_File.txt", FILE_WRITE);  //Open File, or create it
-
+  myFile.println("temp1 temp2 temp3 x1 x2 x3 z1 z2 z3 y1 y2 y3 gx1 gx2 gx3 gy1 gy2 gy3 gz1 gz2 gz3 mx my mz pressure alt");
   //Initializing IMU
   tcaselect(0);
   if (!icm1.begin_I2C())
