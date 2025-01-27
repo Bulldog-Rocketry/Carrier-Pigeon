@@ -43,7 +43,7 @@ void setup(void) {
     Serial.print("SD card sucess");
   }                                      //CS Pin
   myFile = SD.open("/Launch_File.txt", FILE_WRITE);  //Open File, or create it
-  myFile.println("temp1 temp2 temp3 x1 x2 x3 z1 z2 z3 y1 y2 y3 gx1 gx2 gx3 gy1 gy2 gy3 gz1 gz2 gz3 mx my mz pressure alt");
+  myFile.println("temp1,temp2,temp3,x1,x2,x3,z1,z2,z3,y1,y2,y3,gx1,gx2,gx3,gy1,gy2,gy3,gz1,gz2,gz3,mx,my,mz,pressure,alt");
   //Initializing IMU
   tcaselect(0);
   if (!icm1.begin_I2C())
@@ -97,68 +97,67 @@ void loop() {
     tcaselect(3);
 
     myFile.print(temp1.temperature);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(temp2.temperature);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(temp3.temperature);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(accel1.acceleration.x);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(accel2.acceleration.x);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(accel3.acceleration.x);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(accel1.acceleration.z);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(accel2.acceleration.z);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(accel3.acceleration.z);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(-accel1.acceleration.y);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(-accel2.acceleration.y);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(-accel3.acceleration.y);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(gyro1.gyro.x);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(gyro2.gyro.x);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(gyro3.gyro.x);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(gyro1.gyro.y);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(gyro2.gyro.y);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(gyro3.gyro.y);
     myFile.print(" ");
 
     myFile.print(gyro1.gyro.z);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(gyro2.gyro.z);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(gyro3.gyro.z);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(mag.magnetic.x);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(mag.magnetic.y);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(mag.magnetic.z);
-    myFile.print(" ");
+    myFile.print(",");
 
     myFile.print(bmp.pressure);
-    myFile.print(" ");
+    myFile.print(",");
     myFile.print(bmp.readAltitude(1013.25));  //sea level is 1013.25
     myFile.println();
     count++;         // incremented once each loop. with a delay of 0.1 second, it will take 12,000 loops to add up to 20 minutes
     myFile.flush();  // to force data to be written to SD card without needing to close file
-    delay(1000);
 
     if (count == 12000) {  // a count of 12,000 means 20 minutes have elapsed and rocket has landed
       myFile.close();      // rocket has landed, close the file
